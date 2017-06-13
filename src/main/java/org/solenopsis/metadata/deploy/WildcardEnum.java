@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.solenopsis.metadata;
+package org.solenopsis.metadata.deploy;
 
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
 
@@ -142,11 +142,11 @@ public enum WildcardEnum {
         return metadataType;
     }
 
-    public boolean isMetadataType(final DescribeMetadataObject describeMetadataObject) {
+    boolean isMetadataType(final DescribeMetadataObject describeMetadataObject) {
         return metadataType.equals(describeMetadataObject.getXmlName());
     }
 
-    public static boolean isWildCardSupported(final DescribeMetadataObject describeMetadataObject) {
+    static boolean isWildCardSupported(final DescribeMetadataObject describeMetadataObject) {
         for (final WildcardEnum wildcardEnum : WildcardEnum.values()) {
             if (wildcardEnum.isMetadataType(describeMetadataObject)) {
                 return true;
