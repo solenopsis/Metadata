@@ -15,7 +15,7 @@ We support the following application args:
 * --dir [fully qualified path to store downloads WSDLs]
 
 Notes:
-* If you do not provide a --dir option, your home directory will be the output directory.
-* You need to provide either a --solenopsis or --cred params.
+* If you do not provide a `--dir` option, your home directory will be the output directory.
+* You need to provide either a `--solenopsis` or `--cred` params.
 
 `mvn clean install exec:java -Dexec.mainClass=org.solenopsis.metadata.wsdl.RetrieveWsdls -Dexec.args="[aforementioned parameters]"`
