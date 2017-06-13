@@ -39,7 +39,7 @@
         <org.apache.httpcomponents_httpclient>4.5.3</org.apache.httpcomponents_httpclient>
         <commons-io_commons-io>2.5</commons-io_commons-io>
 
-        <org.solenopsis_keraiai>3.0.5</org.solenopsis_keraiai>
+        <org.solenopsis_keraiai>3.0.8</org.solenopsis_keraiai>
 
         <junit_junit>4.12</junit_junit>
 
