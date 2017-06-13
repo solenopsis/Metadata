@@ -151,7 +151,7 @@ public class RetrieveWsdls {
         retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.TOOLING.computeUrl(context.loginContext.getBaseServerUrl())), "tooling.wsdl");
 
         for (final String wsdl : customWsdls) {
-            retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.APEX.computeUrl(context.loginContext.getBaseServerUrl()) + "/" + wsdl), wsdl + ".wsdl");
+            retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.CUSTOM.computeUrl(context.loginContext.getBaseServerUrl()) + "/" + wsdl), wsdl + ".wsdl");
         }
     }
 
