@@ -1,4 +1,4 @@
-package org.solenopsis.metadata.deploy;
+package org.solenopsis.metadata.retrieve;
 
 import java.util.logging.Logger;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataResult;
