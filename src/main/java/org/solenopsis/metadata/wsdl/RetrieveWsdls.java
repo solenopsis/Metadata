@@ -41,7 +41,7 @@ import org.solenopsis.keraiai.wsdl.metadata.Package;
 import org.solenopsis.keraiai.wsdl.metadata.PackageTypeMembers;
 import org.solenopsis.keraiai.wsdl.metadata.RetrieveRequest;
 import org.solenopsis.keraiai.wsdl.metadata.RetrieveResult;
-import org.solenopsis.metadata.retrieve.WildcardEnum;
+import org.solenopsis.metadata.WildcardEnum;
 
 /**
  * Can retrieve the "stock" API WSDLs (apex, enterprise, metadata, partner and tooling).
