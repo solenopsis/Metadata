@@ -18,6 +18,7 @@ package org.solenopsis.metadata;
 
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
+import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
 
 /**
  * Defines the metadata types.
@@ -27,7 +28,9 @@ import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
 public class MetadataTypeContext {
     private final DescribeMetadataObject describeMetadataObject;
 
-    public MetadataTypeContext(final DescribeMetadataObject describeMetadataObject) {
+    public MetadataTypeContext(final MetadataPortType port, final double apiVersion, final DescribeMetadataObject describeMetadataObject) {
+        ObjectUtils.ensureObject(port, "Must provide a metadata port type");
+
         this.describeMetadataObject = ObjectUtils.ensureObject(describeMetadataObject, "Must provide a DescribeMetadataObject!");
     }
 

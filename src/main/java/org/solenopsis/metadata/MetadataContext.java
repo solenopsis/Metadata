@@ -21,6 +21,7 @@ import java.util.List;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataResult;
+import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
 
 /**
  * Holds metadata data.
@@ -32,14 +33,20 @@ public class MetadataContext {
 
     private final List<MetadataTypeContext> metadataTypeContextList;
 
-    public MetadataContext(final DescribeMetadataResult describeMetadataResult) {
-        this.describeMetadataResult = ObjectUtils.ensureObject(describeMetadataResult, "Must provide a DescribeMetadataResult");
+    public MetadataContext(final MetadataPortType port, final double apiVersion) {
+        ObjectUtils.ensureObject(port, "Must provide a metadata port!");
+
+        this.describeMetadataResult = port.describeMetadata(apiVersion);
 
         this.metadataTypeContextList = new ArrayList<>(describeMetadataResult.getMetadataObjects().size());
 
         for (final DescribeMetadataObject describeMetadataObject : describeMetadataResult.getMetadataObjects()) {
-            metadataTypeContextList.add(new MetadataTypeContext(describeMetadataObject));
+            metadataTypeContextList.add(new MetadataTypeContext(port, apiVersion, describeMetadataObject));
         }
+    }
+
+    public MetadataContext(final MetadataPortType port, final String apiVersion) {
+        this(port, Double.parseDouble(apiVersion));
     }
 
     public DescribeMetadataResult getDescribeMetadataResult() {
