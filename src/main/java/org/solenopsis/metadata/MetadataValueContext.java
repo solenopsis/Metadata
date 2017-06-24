@@ -25,10 +25,16 @@ import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
  *
  * @author Scot P. Floess
  */
-public class MetadataTypeContext extends AbstractMetadataTypeContext {
-    public MetadataTypeContext(final MetadataPortType port, final double apiVersion, final DescribeMetadataObject describeMetadataObject) {
-        super(describeMetadataObject);
+public class MetadataValueContext {
+    private final DescribeMetadataObject describeMetadataObject;
 
-        ObjectUtils.ensureObject(port, "Must provide a meta data port!");
+    public MetadataValueContext(final MetadataPortType port, final double apiVersion, final DescribeMetadataObject describeMetadataObject) {
+        ObjectUtils.ensureObject(port, "Must provide a metadata port type");
+
+        this.describeMetadataObject = ObjectUtils.ensureObject(describeMetadataObject, "Must provide a DescribeMetadataObject!");
+    }
+
+    public DescribeMetadataObject getDescribeMetadataObject() {
+        return describeMetadataObject;
     }
 }

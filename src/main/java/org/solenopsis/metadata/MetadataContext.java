@@ -18,8 +18,8 @@ package org.solenopsis.metadata;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataResult;
 import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
 
@@ -28,21 +28,28 @@ import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
  *
  * @author Scot P. Floess
  */
-public class MetadataContext {
+public class MetadataContext extends AbstractCommonBase {
     private final DescribeMetadataResult describeMetadataResult;
 
     private final List<MetadataTypeContext> metadataTypeContextList;
+
+    private final List<MetadataFolderTypeContext> metadataFolderTypeContextList;
 
     public MetadataContext(final MetadataPortType port, final double apiVersion) {
         ObjectUtils.ensureObject(port, "Must provide a metadata port!");
 
         this.describeMetadataResult = port.describeMetadata(apiVersion);
 
-        this.metadataTypeContextList = new ArrayList<>(describeMetadataResult.getMetadataObjects().size());
+        this.metadataTypeContextList = new ArrayList<>(describeMetadataResult.getMetadataObjects().size() - 4);
+        this.metadataFolderTypeContextList = new ArrayList<>(4);
 
-        for (final DescribeMetadataObject describeMetadataObject : describeMetadataResult.getMetadataObjects()) {
-            metadataTypeContextList.add(new MetadataTypeContext(port, apiVersion, describeMetadataObject));
-        }
+        describeMetadataResult.getMetadataObjects().forEach((describeMetadataObject) -> {
+            if (describeMetadataObject.isInFolder()) {
+                metadataTypeContextList.add(new MetadataTypeContext(port, apiVersion, describeMetadataObject));
+            } else {
+                metadataFolderTypeContextList.add(new MetadataFolderTypeContext(port, apiVersion, describeMetadataObject));
+            }
+        });
     }
 
     public MetadataContext(final MetadataPortType port, final String apiVersion) {
@@ -55,5 +62,9 @@ public class MetadataContext {
 
     public List<MetadataTypeContext> getMetadataTypeContextList() {
         return metadataTypeContextList;
+    }
+
+    public List<MetadataFolderTypeContext> getMetadataFolderTypeContextList() {
+        return metadataFolderTypeContextList;
     }
 }

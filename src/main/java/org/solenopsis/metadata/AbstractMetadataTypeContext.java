@@ -16,19 +16,23 @@
  */
 package org.solenopsis.metadata;
 
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
-import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
 
 /**
  * Defines the metadata types.
  *
  * @author Scot P. Floess
  */
-public class MetadataTypeContext extends AbstractMetadataTypeContext {
-    public MetadataTypeContext(final MetadataPortType port, final double apiVersion, final DescribeMetadataObject describeMetadataObject) {
-        super(describeMetadataObject);
+public abstract class AbstractMetadataTypeContext extends AbstractCommonBase {
+    private final DescribeMetadataObject describeMetadataObject;
 
-        ObjectUtils.ensureObject(port, "Must provide a meta data port!");
+    public AbstractMetadataTypeContext(final DescribeMetadataObject describeMetadataObject) {
+        this.describeMetadataObject = ObjectUtils.ensureObject(describeMetadataObject, "Must provide a DescribeMetadataObject!");
+    }
+
+    public DescribeMetadataObject getDescribeMetadataObject() {
+        return describeMetadataObject;
     }
 }
