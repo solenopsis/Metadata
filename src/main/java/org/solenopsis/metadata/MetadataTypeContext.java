@@ -16,19 +16,49 @@
  */
 package org.solenopsis.metadata;
 
+import java.util.List;
+import org.flossware.jcore.AbstractStringifiable;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
-import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
+import org.flossware.jcore.utils.StringUtils;
+import org.solenopsis.keraiai.wsdl.metadata.FileProperties;
 
 /**
  * Defines the metadata types.
  *
  * @author Scot P. Floess
  */
-public class MetadataTypeContext extends AbstractMetadataTypeContext {
-    public MetadataTypeContext(final MetadataPortType port, final double apiVersion, final DescribeMetadataObject describeMetadataObject) {
-        super(describeMetadataObject);
+public class MetadataTypeContext extends AbstractStringifiable {
+    final String xmlName;
 
-        ObjectUtils.ensureObject(port, "Must provide a meta data port!");
+    private final List<FileProperties> filePropertiesList;
+
+    public MetadataTypeContext(final String xmlName, final List<FileProperties> filePropertiesList) {
+        this.xmlName = StringUtils.ensureString(xmlName, "Must provide an XML name!");
+        this.filePropertiesList = ObjectUtils.ensureObject(filePropertiesList, "Must provide a list of FileProperties!");
+    }
+
+    public String getXmlName() {
+        return xmlName;
+    }
+
+    public List<FileProperties> getFilePropertiesList() {
+        return filePropertiesList;
+    }
+
+    @Override
+    public StringBuilder toStringBuilder(StringBuilder stringBuilder, String prefix) {
+        final String newPrefix = prefix + "    ";
+
+        appendLine(stringBuilder, newPrefix, "--------------------------");
+        appendLine(stringBuilder, newPrefix, getXmlName(), ":");
+
+        for (final FileProperties fileProperties : getFilePropertiesList()) {
+            appendLine(stringBuilder, newPrefix, "    --------------------------");
+            appendLine(stringBuilder, newPrefix, "    Full name: ", fileProperties.getFullName());
+            appendLine(stringBuilder, newPrefix, "    File name: ", fileProperties.getFileName());
+            appendLine(stringBuilder, newPrefix, "    Type:      ", fileProperties.getType());
+        }
+
+        return stringBuilder;
     }
 }

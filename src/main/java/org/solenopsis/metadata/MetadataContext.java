@@ -18,42 +18,26 @@ package org.solenopsis.metadata;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.flossware.jcore.AbstractCommonBase;
+import org.flossware.jcore.AbstractStringifiable;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataResult;
-import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
 
 /**
  * Holds metadata data.
  *
  * @author Scot P. Floess
  */
-public class MetadataContext extends AbstractCommonBase {
+public class MetadataContext extends AbstractStringifiable {
     private final DescribeMetadataResult describeMetadataResult;
 
     private final List<MetadataTypeContext> metadataTypeContextList;
 
     private final List<MetadataFolderTypeContext> metadataFolderTypeContextList;
 
-    public MetadataContext(final MetadataPortType port, final double apiVersion) {
-        ObjectUtils.ensureObject(port, "Must provide a metadata port!");
-
-        this.describeMetadataResult = port.describeMetadata(apiVersion);
-
-        this.metadataTypeContextList = new ArrayList<>(describeMetadataResult.getMetadataObjects().size() - 4);
-        this.metadataFolderTypeContextList = new ArrayList<>(4);
-
-        describeMetadataResult.getMetadataObjects().forEach((describeMetadataObject) -> {
-            if (describeMetadataObject.isInFolder()) {
-                metadataTypeContextList.add(new MetadataTypeContext(port, apiVersion, describeMetadataObject));
-            } else {
-                metadataFolderTypeContextList.add(new MetadataFolderTypeContext(port, apiVersion, describeMetadataObject));
-            }
-        });
-    }
-
-    public MetadataContext(final MetadataPortType port, final String apiVersion) {
-        this(port, Double.parseDouble(apiVersion));
+    public MetadataContext(final DescribeMetadataResult describeMetadataResult) {
+        this.describeMetadataResult = ObjectUtils.ensureObject(describeMetadataResult, "Must provide a DescribeMetadataResult!");
+        this.metadataTypeContextList = new ArrayList<>();
+        this.metadataFolderTypeContextList = new ArrayList<>();
     }
 
     public DescribeMetadataResult getDescribeMetadataResult() {
@@ -66,5 +50,24 @@ public class MetadataContext extends AbstractCommonBase {
 
     public List<MetadataFolderTypeContext> getMetadataFolderTypeContextList() {
         return metadataFolderTypeContextList;
+    }
+
+    @Override
+    public StringBuilder toStringBuilder(StringBuilder stringBuilder, String prefix) {
+        final String newPrefix = prefix + "    ";
+
+        appendLine(stringBuilder, newPrefix, "Metadata Types:");
+
+        for (final MetadataTypeContext metadataTypeContext : getMetadataTypeContextList()) {
+            metadataTypeContext.toStringBuilder(stringBuilder, newPrefix);
+        }
+
+        appendLine(stringBuilder, newPrefix, "\nMetadata Folder Types:");
+
+        for (final MetadataFolderTypeContext metadataFolderTypeContext : getMetadataFolderTypeContextList()) {
+            metadataFolderTypeContext.toStringBuilder(stringBuilder, newPrefix);
+        }
+
+        return stringBuilder;
     }
 }

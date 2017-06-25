@@ -110,7 +110,7 @@ public class ListMetadata {
                         final ListMetadataQuery query = new ListMetadataQuery();
                         query.setType(child);
 
-                        final List<ListMetadataQuery> metaDataQuertyList = new ArrayList<ListMetadataQuery>();
+                        final List<ListMetadataQuery> metaDataQuertyList = new ArrayList<>();
 
                         metaDataQuertyList.add(query);
 
@@ -224,15 +224,27 @@ public class ListMetadata {
     /**
      * Return the user.home
      */
+//    public static void main(final String[] args) {
+//        try {
+//            final Credentials creds = getCredentials();
+//            final MetadataPortType port = ApiWebServiceEnum.METADATA_SERVICE.createProxyPort(creds);
+//
+//            final StringBuilder sb = new StringBuilder();
+//            emitMetadata("Grabbing metadata", port, "39.0", sb);
+//
+//            System.out.println(sb.toString());
+//
+////            process(port);
+//        } catch (final Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
     public static void main(final String[] args) {
         try {
             final Credentials creds = getCredentials();
             final MetadataPortType port = ApiWebServiceEnum.METADATA_SERVICE.createProxyPort(creds);
 
-            final StringBuilder sb = new StringBuilder();
-            emitMetadata("Grabbing metadata", port, "39.0", sb);
-
-            System.out.println(sb.toString());
+            System.out.println(RetrieveMetadata.getMetadataComplete(port, "39.0").toString());
 
 //            process(port);
         } catch (final Exception e) {

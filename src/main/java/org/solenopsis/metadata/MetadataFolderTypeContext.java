@@ -16,39 +16,50 @@
  */
 package org.solenopsis.metadata;
 
+import java.util.List;
+import org.flossware.jcore.AbstractStringifiable;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.flossware.jcore.utils.StringUtils;
-import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
-import org.solenopsis.keraiai.wsdl.metadata.MetadataPortType;
+import org.solenopsis.keraiai.wsdl.metadata.FileProperties;
 
 /**
  * Defines the metadata folder types.
  *
  * @author Scot P. Floess
  */
-public class MetadataFolderTypeContext extends AbstractMetadataTypeContext {
-    public static final String EMAIL_XML_NAME = "EmailTemplate";
+public class MetadataFolderTypeContext extends AbstractStringifiable {
+    private final FileProperties fileProperties;
 
-    public static final String EMAIL_TYPE_PREFIX = "Email";
+    private final List<FileProperties> filePropertiesList;
 
-    public static final String FOLDER_TYPE_SUFFIX = "Folder";
-
-    /**
-     * When dealing with a metadata type for folders, if we have the XML name being EmailTemplate, the type will be EmailFolder.
-     * Otherwise the type is the metadata XML name plus Folder. This can be found in case #08849132 opened w/ SFDC...
-     *
-     * @param describeMetadataObject contains the metadata for which we will examine the xml name to compute the type.
-     *
-     * @return the type - either EmailFolder or the xml name plus Folder.
-     */
-    static String computeType(final DescribeMetadataObject describeMetadataObject) {
-        // From case #08849132 opened w/ SFDC...
-        return StringUtils.concat(EMAIL_XML_NAME.endsWith(describeMetadataObject.getXmlName()) ? EMAIL_TYPE_PREFIX : describeMetadataObject.getXmlName(), FOLDER_TYPE_SUFFIX);
+    public MetadataFolderTypeContext(final FileProperties fileProperties, final List<FileProperties> filePropertiesList) {
+        this.fileProperties = ObjectUtils.ensureObject(fileProperties, "Must provide FileProperties!");
+        this.filePropertiesList = ObjectUtils.ensureObject(filePropertiesList, "Must provide a list of FileProperties!");
     }
 
-    public MetadataFolderTypeContext(final MetadataPortType port, final double apiVersion, final DescribeMetadataObject describeMetadataObject) {
-        super(describeMetadataObject);
+    public FileProperties getFileProperties() {
+        return fileProperties;
+    }
 
-        ObjectUtils.ensureObject(port, "Must provide a meta data port!");
+    public List<FileProperties> getFilePropertiesList() {
+        return filePropertiesList;
+    }
+
+    @Override
+    public StringBuilder toStringBuilder(StringBuilder stringBuilder, String prefix) {
+        final String newPrefix = prefix + "    ";
+
+        appendLine(stringBuilder, newPrefix, "--------------------------");
+        appendLine(stringBuilder, newPrefix, "Full name: ", getFileProperties().getFullName());
+        appendLine(stringBuilder, newPrefix, "File name: ", getFileProperties().getFileName());
+        appendLine(stringBuilder, newPrefix, "Type:      ", getFileProperties().getType());
+
+        for (final FileProperties fileProperties : getFilePropertiesList()) {
+            appendLine(stringBuilder, newPrefix, "    --------------------------");
+            appendLine(stringBuilder, newPrefix, "    Full name: ", fileProperties.getFullName());
+            appendLine(stringBuilder, newPrefix, "    File name: ", fileProperties.getFileName());
+            appendLine(stringBuilder, newPrefix, "    Type:      ", fileProperties.getType());
+        }
+
+        return stringBuilder;
     }
 }

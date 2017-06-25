@@ -16,23 +16,9 @@
  */
 package org.solenopsis.metadata;
 
-import org.flossware.jcore.AbstractCommonBase;
-import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.wsdl.metadata.DescribeMetadataObject;
-
 /**
- * Defines the metadata types.
  *
  * @author Scot P. Floess
  */
-public abstract class AbstractMetadataTypeContext extends AbstractCommonBase {
-    private final DescribeMetadataObject describeMetadataObject;
-
-    public AbstractMetadataTypeContext(final DescribeMetadataObject describeMetadataObject) {
-        this.describeMetadataObject = ObjectUtils.ensureObject(describeMetadataObject, "Must provide a DescribeMetadataObject!");
-    }
-
-    public DescribeMetadataObject getDescribeMetadataObject() {
-        return describeMetadataObject;
-    }
+public class FilePropertiesUtils {
 }
