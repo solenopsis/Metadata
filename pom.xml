@@ -111,6 +111,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>${org.codehaus.mojo_cobertura-maven-plugin}</version>
+                <!--
                 <configuration>
                     <instrumentation>
                         <excludes>
@@ -147,6 +148,7 @@
                         </goals>
                     </execution>
                 </executions>
+                -->
             </plugin>
 
             <plugin>
