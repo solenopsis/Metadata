@@ -17,6 +17,7 @@
 package org.solenopsis.metadata.wsdl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -99,13 +100,31 @@ public class RetrieveWsdls {
 
         ZipEntry zipEntry = null;
 
+        final byte[] rawData = new byte[2048000];
+
         do {
             zipEntry = zis.getNextEntry();
 
-            final byte[] rawData = new byte[1024000];
-            zis.read(rawData);
+            if (null == zipEntry || zipEntry.isDirectory() || !zipEntry.getName().endsWith(".cls")) {
+                continue;
+            }
 
-            final String str = new String(rawData);
+            int len;
+
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            do {
+                len = zis.read(rawData);
+
+                if (len < 1) {
+                    continue;
+                }
+
+                baos.write(rawData, 0, len);
+
+            } while (len > 0);
+
+            final String str = new String(baos.toByteArray());
 
             if (str.contains("WebService")) {
                 retVal.add(new File(zipEntry.getName()).getName().split("\\.")[0]);
