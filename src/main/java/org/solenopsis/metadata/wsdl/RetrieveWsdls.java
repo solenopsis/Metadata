@@ -46,11 +46,13 @@ import org.solenopsis.metadata.WildcardEnum;
 import org.solenopsis.metadata.WsdlSubUrlEnum;
 
 /**
- * Can retrieve the "stock" API WSDLs (apex, enterprise, metadata, partner and tooling).
+ * Can retrieve the "stock" API WSDLs (apex, enterprise, metadata, partner and
+ * tooling).
  *
  * @author Scot P. Floess
  */
 public class RetrieveWsdls {
+
     static RetrieveRequest createRetrieveRequest(final String apiVersion) throws Exception {
         final RetrieveRequest retrieveRequest = new RetrieveRequest();
         retrieveRequest.setApiVersion(Double.parseDouble(apiVersion));
@@ -167,7 +169,7 @@ public class RetrieveWsdls {
         retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.ENTERPRISE.computeUrl(context.loginContext.getBaseServerUrl())), "enterprise.wsdl");
         retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.METADATA.computeUrl(context.loginContext.getBaseServerUrl())), "metadata.wsdl");
         retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.PARNTER.computeUrl(context.loginContext.getBaseServerUrl())), "partner.wsdl");
-        retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.TOOLING.computeUrl(context.loginContext.getBaseServerUrl())), "tooling.wsdl");
+//        retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.TOOLING.computeUrl(context.loginContext.getBaseServerUrl())), "tooling.wsdl");
 
         for (final String wsdl : customWsdls) {
             retrieveWsdl(context, new HttpGet(WsdlSubUrlEnum.CUSTOM.computeUrl(context.loginContext.getBaseServerUrl()) + "/" + wsdl), wsdl + ".wsdl");
