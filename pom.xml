@@ -37,7 +37,7 @@
         <net.sourceforge.cobertura_cobertura>2.1.1</net.sourceforge.cobertura_cobertura>
 
         <org.apache.httpcomponents_httpclient>4.5.3</org.apache.httpcomponents_httpclient>
-        <commons-io_commons-io>2.5</commons-io_commons-io>
+        <commons-io_commons-io>2.7</commons-io_commons-io>
 
         <org.solenopsis_keraiai>3.0.8</org.solenopsis_keraiai>
 
