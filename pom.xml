@@ -41,7 +41,7 @@
 
         <org.solenopsis_keraiai>3.0.8</org.solenopsis_keraiai>
 
-        <junit_junit>4.12</junit_junit>
+        <junit_junit>4.13.1</junit_junit>
 
         <github.global.server>github</github.global.server>
     </properties>
